@@ -37,3 +37,5 @@ water_dispenser\esp8266.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 water_dispenser\esp8266.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 water_dispenser\esp8266.o: ../Core/Inc/gpio.h
 water_dispenser\esp8266.o: ../Core/Inc/tim.h
+water_dispenser\esp8266.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+water_dispenser\esp8266.o: ..\bsp\lcd_1602.h

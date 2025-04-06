@@ -36,6 +36,8 @@ water_dispenser\main.o: ../Core/Inc/tim.h
 water_dispenser\main.o: ../Core/Inc/usart.h
 water_dispenser\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 water_dispenser\main.o: ../Core/Inc/gpio.h
-water_dispenser\main.o: ../bsp/ds18b20.h
 water_dispenser\main.o: ../bsp/lcd_1602.h
 water_dispenser\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+water_dispenser\main.o: ../bsp/esp8266.h
+water_dispenser\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+water_dispenser\main.o: ../bsp/ds18b20.h

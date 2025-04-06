@@ -41,7 +41,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern int temp_ban;
+extern int water_ban;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

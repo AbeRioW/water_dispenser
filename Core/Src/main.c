@@ -23,16 +23,19 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "ds18b20.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd_1602.h"
+#include "esp8266.h"
+#include "ds18b20.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-int temp_ban = 20;
+int temp_ban = 23;
+int water_ban= 2;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -75,6 +78,8 @@ int main(void)
 	float adcy;
 	char data_light[10]={0},data_show[10],data_tmp[4];
 	  float num_d;;
+	char send_wifi_data[30];
+	static int _count_data=0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -102,11 +107,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
 		LCD_INIT();
 		DS_Init();
-		lcd1602_show_string(0,0,"hello");
+
 		HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_3);
 		
 		firelay_control(false);
 		water_control(false);
+		start_esp8266();
 //		beep_control(true);
   /* USER CODE END 2 */
 
@@ -131,6 +137,19 @@ int main(void)
 		sprintf(data_tmp,"%02d",temp_ban);
 		lcd1602_show_string(12,0,data_tmp);
 		
+				sprintf(data_tmp,"%02d",water_ban);
+		lcd1602_show_string(12,1,data_tmp);
+		
+		_count_data++;
+		if(_count_data/500)
+		{
+						sprintf(send_wifi_data,"temp:%0.2f water:%0.3f\r\n",num_d,adcy);
+		send_wifi(send_wifi_data,30);
+		}
+
+		
+		handle_esp8266();
+		
 		if(num_d>temp_ban)  //温度大于阈值了
 		{
 				firelay_control(false);
@@ -140,6 +159,16 @@ int main(void)
 		{
 				__HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,25);
 		}
+		
+		if(adcy<water_ban)
+		{
+				beep_control(true);
+		}
+		else
+		{
+				beep_control(false);
+		}
+		
      if(botton==KEY1)
 		 {
 			   HAL_Delay(100);

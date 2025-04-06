@@ -1,5 +1,7 @@
 #include "esp8266.h"
 #include "tim.h"
+#include "stdlib.h"
+#include "lcd_1602.h"
 
 
 bool device_connect = false;
@@ -36,15 +38,25 @@ void handle_esp8266(void)
 	char *wifi_connect = "0,CONNECT";
 	char *wifi_rec = "\r\n+IPD,";
 	char *layon = "\r\n+IPD,0,5:layon";
-	char *timeset2 = "\r\n+IPD,0,5:set02";
-	char *timeset3 = "\r\n+IPD,0,5:set03";
-	char *timeset4 = "\r\n+IPD,0,5:set04";
-	char *timeset5 = "\r\n+IPD,0,5:set05";
-	char *timeset6 = "\r\n+IPD,0,5:set06";
-	char *timeset7 = "\r\n+IPD,0,5:set07";
-	char *timeset8 = "\r\n+IPD,0,5:set08";
-	char *timeset9 = "\r\n+IPD,0,5:set09";
-	char *timeset10 = "\r\n+IPD,0,5:set10";
+	char *timeset2 = "\r\n+IPD,0,7:water01";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *timeset3 = "\r\n+IPD,0,7:water02";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *timeset4 = "\r\n+IPD,0,7:water03";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	
+	
+	char *tmp1 = "\r\n+IPD,0,5:tmp10";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *tmp2 = "\r\n+IPD,0,5:tmp20";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *tmp3 = "\r\n+IPD,0,5:tmp40";  //\r\n+IPD,0,5:water02这里的02表示阈值
+		char *tmp4 = "\r\n+IPD,0,5:tmp40";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *tmp5 = "\r\n+IPD,0,5:tmp50";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *tmp6 = "\r\n+IPD,0,5:tmp60";  //\r\n+IPD,0,5:water02这里的02表示阈值
+		char *tmp7 = "\r\n+IPD,0,5:tmp70";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	char *tmp8 = "\r\n+IPD,0,5:tmp80";  //\r\n+IPD,0,5:water02这里的02表示阈值
+		char *tmp9 = "\r\n+IPD,0,5:tmp90";  //\r\n+IPD,0,5:water02这里的02表示阈值
+	
+	
+	
+//	char *timeset3 = "\r\n+IPD,0,5:tmp";    //\r\n+IPD,0,5:tmp03，这里的03表示阈值
+
 	if(rx1_end_flag)
 	{
 		 //printf("HANDLE %s\r\n",uart2_rx);
@@ -54,6 +66,69 @@ void handle_esp8266(void)
 			{
 						//printf("yes\r\n");
 						device_connect=true;
+			}
+			
+		  if(memcmp(uart1_rx,timeset2,18)==0)  //水深的阈值
+			{
+						water_ban= 1;
+			}
+			
+		  if(memcmp(uart1_rx,timeset3,18)==0)  //温度的阈值
+			{
+						water_ban= 2;
+			}
+			
+			if(memcmp(uart1_rx,timeset4,18)==0)  //温度的阈值
+			{
+						water_ban= 3;
+			}
+			
+			
+			if(memcmp(uart1_rx,tmp1,16)==0)  //温度的阈值
+			{
+						temp_ban= 10;
+			}
+			
+						if(memcmp(uart1_rx,tmp2,16)==0)  //温度的阈值
+			{
+						temp_ban= 20;
+			}
+			
+						if(memcmp(uart1_rx,tmp3,16)==0)  //温度的阈值
+			{
+						temp_ban= 30;
+			}
+			
+						if(memcmp(uart1_rx,tmp4,16)==0)  //温度的阈值
+			{
+						temp_ban= 40;
+			}
+			
+						if(memcmp(uart1_rx,tmp5,16)==0)  //温度的阈值
+			{
+						temp_ban= 50;
+			}
+			
+									if(memcmp(uart1_rx,tmp6,16)==0)  //温度的阈值
+			{
+						temp_ban= 60;
+			}
+			
+			
+									if(memcmp(uart1_rx,tmp7,16)==0)  //温度的阈值
+			{
+						temp_ban= 70;
+			}
+			
+			
+									if(memcmp(uart1_rx,tmp8,16)==0)  //温度的阈值
+			{
+						temp_ban= 80;
+			}
+
+												if(memcmp(uart1_rx,tmp9,16)==0)  //温度的阈值
+			{
+						temp_ban= 90;
 			}
 			
 			rx1_count=0;
