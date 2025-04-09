@@ -34,8 +34,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-int temp_ban = 23;
-int water_ban= 2;
+int temp_ban = 26;
+int water_ban= 1;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -141,8 +141,9 @@ int main(void)
 		lcd1602_show_string(12,1,data_tmp);
 		
 		_count_data++;
-		if(_count_data/500)
+		if(_count_data/20)
 		{
+			_count_data=0;
 						sprintf(send_wifi_data,"temp:%0.2f water:%0.3f\r\n",num_d,adcy);
 		send_wifi(send_wifi_data,30);
 		}
